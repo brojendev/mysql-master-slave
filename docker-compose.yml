@@ -12,7 +12,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: restipi
+      MYSQL_DATABASE: restipi_wr
       MYSQL_USER: restipi
       MYSQL_PASSWORD: restipi
       DATABASE_HOST: mysql_db_container
@@ -24,22 +24,22 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     restart: always
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   container_name: dev_pma
-  #   depends_on:
-  #     - mysql_db_container
-  #   environment:
-  #     PMA_HOST: mysql_db_container
-  #     PMA_PORT: 3306
-  #     PMA_ARBITRARY: 1
-  #   restart: always
-  #   ports:
-  #     - 8080:80
-  # my_db_config:
-  #   build: .
-  #   depends_on:
-  #     - mysql_db_container
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dev_pma
+    depends_on:
+      - mysql_db_container
+    environment:
+      PMA_HOST: mysql_db_container
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+  my_db_config:
+    build: .
+    depends_on:
+      - mysql_db_container
   #   volumes:
   #     - ./mysql_connector.sh:/tmp/mysql_connector.sh
   #   command: /bin/bash -x /tmp/mysql_connector.sh
